@@ -66,7 +66,7 @@ function validate() {
     }
     // валидация Y
     let checkerY = false;
-    let y = document.getElementById('y').value;
+    let y = document.getElementById('y').value.replace(',', '.');
     if (y !== '') {
         try {
             if (parseFloat(y) > -5 && parseFloat(y) < 3) {
