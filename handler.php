@@ -5,7 +5,10 @@ $START=microtime(true);
 $X=(int)$_POST["X"];
 $Y=(double)$_POST["Y"];
 $R=(int)$_POST["R"];
-if(check($X,$Y,$R)){
+if (in_array($X,array(-3,-2,-1,0,1,2,3,4,5))&&$Y>-5&&$Y<3&&in_array($R,array(1,2,3,4,5))){
+    $RESULT="INCORRECT";
+}
+else if(check($X,$Y,$R)){
     $RESULT="IN";
 }
 else{
