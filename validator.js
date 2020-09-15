@@ -29,30 +29,21 @@ document.getElementById('submit').addEventListener('click', function send_reques
         formData.append("X", params_array[0]);
         formData.append("Y", params_array[1]);
         formData.append("R", params_array[2]);
-
     }
-    let request=new XMLHttpRequest();
+    var request=new XMLHttpRequest();
     request.open('POST','handler.php',true);
     request.addEventListener('readystatechange', function() {
         if ((request.readyState===4) && (request.status===200)) {
             document.getElementById('table1').insertAdjacentHTML('beforeend', request.responseText);
         }
-    });
+    })
     request.send(formData);
-    // fetch('handler.php', {
-    //     method: 'POST',
-    //     body: formData
-    // }).then(function (response) {
-    //     response.text().then(function (text) {
-    //         document.getElementById('table1').insertAdjacentHTML('beforeend', text);
-    //     });
-    // });
 });
 
 function validate() {
     let value_X = null;
     let value_R = null;
-    let value_Y = null;
+    let value_Y=null;
     let array = [];
     // валидация X
     let checkerX = false;
@@ -66,19 +57,22 @@ function validate() {
     }
     // валидация Y
     let checkerY = false;
-    let y = document.getElementById('y').value.replace(',', '.');
+    let y = document.getElementById('y').value;
     if (y !== '') {
         try {
             if (parseFloat(y) > -5 && parseFloat(y) < 3) {
                 checkerY = true;
+                value_Y = parseFloat(y);
             }
         } catch (e) {
             checkerY = false;
         }
     }
+    else{
+        value_Y=6;
+    }
     if (checkerY) {
         document.getElementById('y').style.background = '#83cca1';
-        value_Y = parseFloat(y);
     } else {
         document.getElementById('y').style.background = '#eb5757';
     }
@@ -91,6 +85,15 @@ function validate() {
             value_R = radio.value;
         }
     })
+    if (value_X===null){
+        value_X=6;
+    }
+    if (value_R===null){
+        value_R=6;
+    }
+    array.push(value_X);
+    array.push(value_Y);
+    array.push(value_R);
     if (checkerX && checkerY && checkerR) {
         let cx = 250 + 200 * value_X / value_R;
         let cy = 250 - 200 * value_Y / value_R;
@@ -98,9 +101,6 @@ function validate() {
         document.getElementById('point').setAttribute('r', "5");
         document.getElementById('point').setAttribute('cx', String(cx));
         document.getElementById('point').setAttribute('cy', String(cy));
-        array.push(value_X);
-        array.push(value_Y);
-        array.push(value_R)
     } else {
         document.getElementById('submit').setAttribute('hidden', '');
     }
