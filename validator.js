@@ -7,9 +7,9 @@ document.getElementsByName('X').forEach(function (button) {
             }
         });
         button.classList.add('X_active');
-        validate();
+        button.style.background='#83cca1';
     });
-})
+});
 document.getElementsByName('R').forEach(function (radio) {
     radio.addEventListener('click', function () {
         document.getElementsByName('R').forEach(function (radio) {
@@ -18,94 +18,101 @@ document.getElementsByName('R').forEach(function (radio) {
             }
         });
         radio.classList.add('R_active');
-        validate();
     });
-})
-document.getElementById('submit').addEventListener('click', function send_request(e) {
-    e.preventDefault();
-    let params_array = validate();
-    let formData = new FormData();
-    if (params_array.length !== 0) {
-        formData.append("X", params_array[0]);
-        formData.append("Y", params_array[1]);
-        formData.append("R", params_array[2]);
-    }
-    var request=new XMLHttpRequest();
-    request.open('POST','handler.php',true);
-    request.addEventListener('readystatechange', function() {
-        if ((request.readyState===4) && (request.status===200)) {
-            document.getElementById('table1').insertAdjacentHTML('beforeend', request.responseText);
-        }
-    })
-    request.send(formData);
 });
+document.getElementById('submit').addEventListener('click', function send_request(e) {
+    if (validX()&&validY()&&validR()){
+        let X_value=0;
+        let Y_value;
+        let R_value=0;
+        let x=document.getElementsByName('X');
+        x.forEach(function (button) {
+            if (button.classList.contains('X_active')){
+                X_value=button.value;
+            }
+        });
+        Y_value=document.getElementById('y').value;
+        let r=document.getElementsByName('R');
+        r.forEach(function (radio) {
+            if (radio.classList.contains('R_active')){
+                R_value=radio.value;
+            }
+        });
+        let cx = 250 + 200 * X_value / R_value;
+        let cy = 250 - 200 * Y_value / R_value;
+        document.getElementById('point').setAttribute('r', "5");
+        document.getElementById('point').setAttribute('cx', String(cx));
+        document.getElementById('point').setAttribute('cy', String(cy));
+        let formData = new FormData();
+        formData.append("X",X_value);
+        formData.append("Y", Y_value);
+        formData.append("R", R_value);
+        let request=new XMLHttpRequest();
+        request.open('POST','handler.php',true);
+        request.addEventListener('readystatechange', function() {
+            if ((request.readyState===4) && (request.status===200)) {
+                document.getElementById('table1').insertAdjacentHTML('beforeend', request.responseText);
+            }
+        })
+        request.send(formData);
+    }
 
-function validate() {
-    let value_X = null;
-    let value_R = null;
-    let value_Y=null;
-    let array = [];
-    // валидация X
-    let checkerX = false;
+});
+function validX() {
+    let checkerX=false;
     let x = document.getElementsByName('X');
     for (let i = 0; i < x.length; i++) {
         if (x[i].classList.contains('X_active')) {
-            x[i].style.background = '#83cca1';
-            value_X = x[i].value;
             checkerX = true;
         }
     }
-    // валидация Y
+    if (!checkerX){
+        alert("Вы не выбрали значение для X")
+    }
+    return checkerX;
+}
+function validY() {
     let checkerY = false;
     let y = document.getElementById('y').value;
-    if (y !== '') {
-        try {
+    if (y !== '' && !isNaN(y)) {
             if (parseFloat(y) > -5 && parseFloat(y) < 3) {
                 checkerY = true;
-                value_Y = parseFloat(y);
             }
-        } catch (e) {
-            checkerY = false;
+    }
+    if (!checkerY) {
+        alert("Введено неверное значение для Y");
+    }
+    return checkerY;
+}
+function colorY() {
+    let checkerY = false;
+    let y = document.getElementById('y').value;
+    if (y !== '' && !isNaN(y)) {
+        if (parseFloat(y) > -5 && parseFloat(y) < 3) {
+            checkerY = true;
         }
     }
-    else{
-        value_Y=6;
-    }
-    if (checkerY) {
-        document.getElementById('y').style.background = '#83cca1';
-    } else {
-        document.getElementById('y').style.background = '#eb5757';
-    }
-    // валидация R
+if (checkerY){
+    document.getElementById('y').style.background = '#83cca1';
+}
+else{
+    document.getElementById('y').style.background = '#eb5757';
+}
+}
+function validR() {
     let checkerR = false;
     let r = document.getElementsByName('R');
     r.forEach(function (radio) {
         if (radio.classList.contains('R_active')) {
             checkerR = true;
-            value_R = radio.value;
         }
-    })
-    if (value_X===null){
-        value_X=6;
+    });
+    if (!checkerR){
+        alert("Вы не выбрали значение для R");
     }
-    if (value_R===null){
-        value_R=6;
-    }
-    array.push(value_X);
-    array.push(value_Y);
-    array.push(value_R);
-    if (checkerX && checkerY && checkerR) {
-        let cx = 250 + 200 * value_X / value_R;
-        let cy = 250 - 200 * value_Y / value_R;
-        document.getElementById('submit').removeAttribute('hidden');
-        document.getElementById('point').setAttribute('r', "5");
-        document.getElementById('point').setAttribute('cx', String(cx));
-        document.getElementById('point').setAttribute('cy', String(cy));
-    } else {
-        document.getElementById('submit').setAttribute('hidden', '');
-    }
-    return array;
+    return checkerR;
 }
+
 
 
 

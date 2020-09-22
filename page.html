@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab1</title>
+    <link rel="stylesheet" href="page_style.css">
+</head>
+<body>
+<table id="main_table">
+    <tr>
+        <th class="HEAD" colspan="2">
+            <div id="lab">Laboratory Work №1</div>
+            <div>Mastyukina Mariya <span>P3230</span></div>
+            <div>Variant: <span>2618</span></div>
+        </th>
+    </tr>
+    <tr>
+        <td class="COORDINATE">
+            <svg width="500" height="500">
+                <g class="figures">
+                    <path d="M250 250 V 150 H 450 V 250 L 250 350 L250 250" fill="#00BFFF"></path>
+                    <path d="M250 250 H 50 A200 200 0 0 0 250 450 L250 250" fill="#00BFFF"></path>
+                </g>
+                <g class="lines">
+                    <path d="M 0 250 H 500 M490 240 L 500 250 M 490 260 L 500 250" fill="none" stroke="#000000"
+                          stroke-width="1.5"></path>
+                    <path d="M 250 500 V 0 M240 10 L 250 0 M 260 10 L 250 0" stroke-width="1.5" stroke="#000"
+                          fill="none"></path>
+                    <path d="M 240 50 L 260 50" stroke-width="1.5" stroke="#000" fill="none"></path>
+                    <path d="M 240 150 L 260 150" stroke-width="1.5" stroke="#000" fill="none"></path>
+                    <path d="M 240 350 L 260 350" stroke-width="1.5" stroke="#000" fill="none"></path>
+                    <path d="M 240 450 L 260 450" stroke-width="1.5" stroke="#000" fill="none"></path>
+                    <path d="M 50 240 L 50 260" stroke-width="1.5" stroke="#000" fill="none"></path>
+                    <path d="M 150 240 L 150 260" stroke-width="1.5" stroke="#000" fill="none"></path>
+                    <path d="M 350 240 L 350 260" stroke-width="1.5" stroke="#000" fill="none"></path>
+                    <path d="M 450 240 L 450 260" stroke-width="1.5" stroke="#000" fill="none"></path>
+                </g>
+                <g class="text">
+                    <text x="50" y="239">-R</text>
+                    <text x="150" y="239">-R/2</text>
+                    <text x="350" y="239">R/2</text>
+                    <text x="450" y="239">R</text>
+                    <text x="488" y="239">X</text>
+                    <text x="261" y="12">Y</text>
+                    <text x="261" y="50">R</text>
+                    <text x="261" y="150">R/2</text>
+                    <text x="261" y="350">-R/2</text>
+                    <text x="261" y="450">-R</text>
+                </g>
+                <g class="point">
+                    <circle r="0" fill="purple" cx="250" cy="250" id="point"></circle>
+                </g>
+            </svg>
+        </td>
+        <td class="DESCRIPTION">
+            <form action="handler.php" method="post">
+            <div class="X">
+                <div>Changing X:</div>
+                <div><input type="button" name="X" id="button1" value="-3">
+                <input type="button" name="X" id="button2" value="-2">
+                <input type="button" name="X" id="button3" value="-1"></div>
+                <div><input type="button" name="X" id="button4" value="0">
+                <input type="button" name="X" id="button5" value="1">
+                <input type="button" name="X" id="button6" value="2"></div>
+                <div><input type="button" name="X" id="button7" value="3">
+                <input type="button" name="X" id="button8" value="4">
+                <input type="button" name="X" id="button9" value="5"></div>
+            </div>
+            <div class="Y">
+                <div>Changing Y:</div>
+                <input type="text" name="Y" id="y" placeholder="-5...3" oninput="colorY()">
+            </div>
+            <div class="R">
+                <div>Changing R:</div>
+                <input type="radio" name="R" value="1" id="radio1">
+                <label for="radio1">1</label>
+                <input type="radio" name="R" value="2" id="radio2">
+                <label for="radio2">2</label>
+                <input type="radio" name="R" value="3" id="radio3">
+                <label for="radio3">3</label>
+                <input type="radio" name="R" value="4" id="radio4">
+                <label for="radio4">4</label>
+                <input type="radio" name="R" value="5" id="radio5">
+                <label for="radio5">5</label>
+            </div>
+            </form>
+            <div class="buttons">
+                <input id="submit" type="button" value="send">
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td id="table" colspan="2">
+            <table id="table1">
+                <tr>
+                    <th width="50">X</th>
+                    <th width="50">Y</th>
+                    <th width="50">R</th>
+                    <th width="200">Result</th>
+                    <th width="200">Current Time</th>
+                    <th width="200">Time of working</th>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" class="FOOTER">
+            &#169; Университет ИТМО, студентка Мастюкина Мария: <a href="mailto:285598@niuitmo.ru">285598@niuitmo.ru</a>,
+            ссылка
+            на GitHub:
+            <a href=""></a>
+        </td>
+    </tr>
+</table>
+</body>
+<script type="text/javascript" src="validator.js"></script>
+</html>
